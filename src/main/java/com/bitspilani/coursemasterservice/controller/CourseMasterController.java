@@ -3,6 +3,9 @@ package com.bitspilani.coursemasterservice.controller;
 import com.bitspilani.coursemasterservice.dto.CourseMasterDTO;
 import com.bitspilani.coursemasterservice.dto.ErrorResponse;
 import com.bitspilani.coursemasterservice.service.Coursemasterservice;
+
+import java.util.List;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping("/course")
 public class CourseMasterController {
@@ -26,9 +30,9 @@ public class CourseMasterController {
     }
 
     @PostMapping
-    public ResponseEntity<CourseMasterDTO> addCourse(
+    public ResponseEntity<CourseMasterDTO> addUpdateCourse(
         @RequestBody CourseMasterDTO courseMasterDTO) {
-        return ResponseEntity.ok(coursemasterservice.addCourse(courseMasterDTO));
+        return ResponseEntity.ok(coursemasterservice.addUpdateCourse(courseMasterDTO));
     }
 
     @DeleteMapping("removeCourse/{courseId}")
@@ -40,6 +44,16 @@ public class CourseMasterController {
     @GetMapping("/checkIfCourseExists/{courseId}")
     public ResponseEntity<Boolean> checkIfCourseExists(@PathVariable("courseId") Long courseId) {
         return ResponseEntity.ok(coursemasterservice.isCourseAvailable(courseId));
+    }
+
+    @GetMapping("/getCourseContentByCourseId/{courseId}")
+    public ResponseEntity<CourseMasterDTO> getCourseContentByCourseId(@PathVariable("courseId") Long courseId) {
+        return ResponseEntity.ok(coursemasterservice.getCourse(courseId));
+    }
+    
+    @GetMapping("/getAllCourses")
+    public ResponseEntity<List<CourseMasterDTO>> getAllCourses() {
+        return ResponseEntity.ok(coursemasterservice.getAllCourses());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

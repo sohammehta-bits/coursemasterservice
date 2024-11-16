@@ -1,6 +1,5 @@
 package com.bitspilani.coursemasterservice.dto;
 
-import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data

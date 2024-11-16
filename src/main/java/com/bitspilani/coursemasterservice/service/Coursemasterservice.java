@@ -3,6 +3,10 @@ package com.bitspilani.coursemasterservice.service;
 import com.bitspilani.coursemasterservice.dto.CourseMasterDTO;
 import com.bitspilani.coursemasterservice.model.CourseMaster;
 import com.bitspilani.coursemasterservice.repository.CourseMasterRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +29,7 @@ public class Coursemasterservice {
         this.restTemplate = restTemplate;
     }
 
-    public CourseMasterDTO addCourse(CourseMasterDTO CourseMasterDTO) {
+    public CourseMasterDTO addUpdateCourse(CourseMasterDTO CourseMasterDTO) {
         CourseMaster courseMaster = getCourseMaster(CourseMasterDTO);
         CourseMaster course = this.courseMasterRepository.save(courseMaster);
         return getCourseMasterDTO(course);
@@ -41,11 +45,24 @@ public class Coursemasterservice {
     }
 
     public void removeCourse(Long courseId) {
+        //checkIfCourseIsRegistered(courseId);
         courseMasterRepository.deleteByCourseId(courseId);
     }
 
     public Boolean isCourseAvailable(Long courseId) {
         return courseMasterRepository.existsByCourseId(courseId);
+    }
+
+    public CourseMasterDTO getCourse(Long courseId) {
+        return getCourseMasterDTO(courseMasterRepository.findById(courseId).get());
+    }
+
+    public List<CourseMasterDTO> getAllCourses() {
+        List<CourseMasterDTO> courseMasterDTOs = new ArrayList<CourseMasterDTO>();
+        courseMasterRepository.findAll().forEach(course->{
+            courseMasterDTOs.add(getCourseMasterDTO(course));
+        });
+        return courseMasterDTOs;
     }
 
     private CourseMasterDTO getCourseMasterDTO(CourseMaster course) {
