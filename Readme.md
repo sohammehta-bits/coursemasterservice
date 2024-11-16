@@ -1,4 +1,4 @@
-**Course Registration Service**
+**Course Master Service**
 -
 
 Pre-requisites
@@ -7,7 +7,7 @@ Pre-requisites
 - jdk - 17
 - docker - to run mysql 8.3.0
 
-Steps to run `Course Registration Service`
+Steps to run `Course Master Service`
 -
 1. Run `mysql` via docker using following command: `docker run -p 3308:3306 --name coursemastercontainer -e MYSQL_PASSWORD=Bits@2024 -e MYSQL_USER=sa -e MYSQL_ROOT_PASSWORD=Bits@2024 -e MYSQL_DATABASE=coursemasterdb  mysql:8.3.0`. First run might take time as image might be getting downloaded.
 2. Build the service using `mvn clean install`. First run might take time depending on the network connection and available mirrors.
