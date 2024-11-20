@@ -39,13 +39,13 @@ public class Coursemasterservice {
         String getCourseRegistrationEndpoint = StringUtils.join(courseRegistrationServiceUrl, COURSE_REGISTRATION, courseId);
         ResponseEntity<Object> response = restTemplate.getForEntity(getCourseRegistrationEndpoint, Object.class);
 
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Student not found or service unavailable");
+        if (!response.getBody().toString().equals("false")) {
+            throw new RuntimeException("Course is registered, so can not delete");
         }
     }
 
     public void removeCourse(Long courseId) {
-        //checkIfCourseIsRegistered(courseId);
+        checkIfCourseIsRegistered(courseId);
         courseMasterRepository.deleteByCourseId(courseId);
     }
 
